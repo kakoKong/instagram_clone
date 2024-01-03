@@ -2,7 +2,7 @@ import { Flex, Box, Text, Input, InputGroup, InputRightElement, Button } from "@
 import React, { useState } from "react";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/const";
 
-const PostFooter = () => {
+const PostFooter = ({username}) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1000);
 
@@ -30,7 +30,7 @@ const PostFooter = () => {
         {likes} likes
       </Text>
       <Text fontWeight={600} fontSize={"sm"}>
-        kong
+        {username}
         <Text as="span" pl={1} fontWeight={400}>
           Feeling Good
         </Text>
