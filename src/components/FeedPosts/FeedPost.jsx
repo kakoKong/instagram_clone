@@ -7,10 +7,10 @@ const FeedPost = ({username, img, avatar}) => {
   return (
     <>
       <PostHeader username={username} avatar={avatar} />
-      <Box my={2}>
+      <Box my={4}>
         <Image src={img} alt="user profile pic" />
       </Box>
-      <PostFooter username={username} />
+      <PostFooter username={username} isProfilePicture={false}/>
     </>
   );
 }

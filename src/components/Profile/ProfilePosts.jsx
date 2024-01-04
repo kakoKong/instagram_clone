@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ProfilePost from './ProfilePost'
-import { Container, Skeleton, SkeletonCircle, VStack, Flex, Box, Grid } from "@chakra-ui/react";
+import { Container, Skeleton, SkeletonCircle, VStack, Flex, Box, Grid, useDisclosure } from "@chakra-ui/react";
 
 const ProfilePosts = () => {
   const [isLoading, setIsLoading] = useState(true);
