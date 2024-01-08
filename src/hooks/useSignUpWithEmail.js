@@ -12,7 +12,8 @@ const useSignUpWithEmail = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
 
   const signup = async (inputs) => {
-    if(!inputs.email || !inputs.password || !inputs.username || inputs.fullName) {
+    console.log(inputs)
+    if(!inputs.email || !inputs.password || !inputs.username || !inputs.fullName) {
       console.log("Please fill all the fields")
       return
     }
@@ -44,9 +45,7 @@ const useSignUpWithEmail = () => {
       console.log(err)
     }
   }
-  return {
-    loading, error, signup
-  }
+  return {loading, error, signup}
 }
 
 export default useSignUpWithEmail

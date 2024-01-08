@@ -13,7 +13,7 @@ const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const [loading, error, singup] = useSignUpWithEmail();
+  const {loading, error, signup} = useSignUpWithEmail();
   return (<>
     <Input
       placeholder="Email"
@@ -59,7 +59,7 @@ const SignUp = () => {
     )}
 
 
-    <Button w={"full"}isLoading={loading} colorScheme="blue" size={"sm"} onClick={() => singup(input)}>
+    <Button w={"full"}isLoading={loading} colorScheme="blue" size={"sm"} onClick={() => signup(input)}>
       Sign Up
     </Button>
   </>
