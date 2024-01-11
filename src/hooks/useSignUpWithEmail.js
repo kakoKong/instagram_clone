@@ -1,24 +1,32 @@
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+// import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, firestore } from '../firebase/firebase'
 import { setDoc, doc } from 'firebase/firestore';
+import useShowToast from "./useShowToast";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
 
 const useSignUpWithEmail = () => {
-  const [
-    createUserWithEmailAndPassword,
-    loading,
-    error,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  // const [
+  //   createUserWithEmailAndPassword,
+  //   loading,
+  //   error,
+  // ] = useCreateUserWithEmailAndPassword(auth);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const showToast = useShowToast();
 
   const signup = async (inputs) => {
-    console.log(inputs)
+    setIsLoading(true);
     if(!inputs.email || !inputs.password || !inputs.username || !inputs.fullName) {
-      console.log("Please fill all the fields")
+      showToast("error", "Please fill all the fields", "error");
       return
     }
     try{
-      const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password)
-      if (!newUser && error) {
-        console.log(error)
+      const newUser = await createUserWithEmailAndPassword( auth, inputs.email, inputs.password)
+      console.log(newUser);
+      if (!newUser) {
+        showToast("Error", "Something went wrong", "error");
         return
       }
       if(newUser) {
@@ -36,14 +44,17 @@ const useSignUpWithEmail = () => {
         }
 
         await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
-        localStorage.setItem("user-info", JSON.stringify(userDoc))
+        localStorage.setItem("user-info", JSON.stringify(userDoc));
+        setIsLoading(false);
       }
     }
     catch (err) {
-      console.log(err)
+      console.log(err.message)
+      showToast("Error", err.message, "error");
+      setIsLoading(false)
     }
   }
-  return {loading, error, signup}
+  return {isLoading, signup}
 }
 
 export default useSignUpWithEmail
