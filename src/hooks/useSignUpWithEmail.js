@@ -4,19 +4,17 @@ import { setDoc, doc } from 'firebase/firestore';
 import useShowToast from "./useShowToast";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
+import useAuthStore from '../store/authStore';
 
 const useSignUpWithEmail = () => {
-  // const [
-  //   createUserWithEmailAndPassword,
-  //   loading,
-  //   error,
-  // ] = useCreateUserWithEmailAndPassword(auth);
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [error, setError] = useState();
 
   const showToast = useShowToast();
+
+  const loginUser = useAuthStore(state => state.login)
 
   const signup = async (inputs) => {
     setIsLoading(true);
@@ -47,6 +45,7 @@ const useSignUpWithEmail = () => {
 
         await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
         localStorage.setItem("user-info", JSON.stringify(userDoc));
+        loginUser(userDoc)
         setIsLoading(false);
       }
     }
