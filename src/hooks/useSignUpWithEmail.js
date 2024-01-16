@@ -14,6 +14,8 @@ const useSignUpWithEmail = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [error, setError] = useState();
+
   const showToast = useShowToast();
 
   const signup = async (inputs) => {
@@ -51,10 +53,11 @@ const useSignUpWithEmail = () => {
     catch (err) {
       console.log(err.message)
       showToast("Error", err.message, "error");
+      setError(err)
       setIsLoading(false)
     }
   }
-  return {isLoading, signup}
+  return {isLoading, signup, error}
 }
 
 export default useSignUpWithEmail

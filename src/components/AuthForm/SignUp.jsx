@@ -13,7 +13,7 @@ const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { isLoading, signup } = useSignUpWithEmail();
+  const { isLoading, signup, error } = useSignUpWithEmail();
   return (<>
     <Input
       placeholder="Email"
@@ -51,12 +51,12 @@ const SignUp = () => {
       </InputRightElement>
     </InputGroup>
 
-    {/* {error && (
+    {error && (
       <Alert status="error" fontSize={13} p={2} borderRadius={4}>
         <AlertIcon fontSize={12} />
         {error.message}
       </Alert>
-    )} */}
+    )}
 
 
     <Button
