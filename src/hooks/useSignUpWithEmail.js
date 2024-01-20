@@ -1,10 +1,11 @@
 // import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, firestore } from '../firebase/firebase'
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDocs } from 'firebase/firestore';
 import useShowToast from "./useShowToast";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import useAuthStore from '../store/authStore';
+import { collection, query, where } from "firebase/firestore";
 
 const useSignUpWithEmail = () => {
 
@@ -18,18 +19,31 @@ const useSignUpWithEmail = () => {
 
   const signup = async (inputs) => {
     setIsLoading(true);
-    if(!inputs.email || !inputs.password || !inputs.username || !inputs.fullName) {
+    if (!inputs.email || !inputs.password || !inputs.username || !inputs.fullName) {
       showToast("error", "Please fill all the fields", "error");
       return
     }
-    try{
-      const newUser = await createUserWithEmailAndPassword( auth, inputs.email, inputs.password)
+
+    const usersRef = collection(firestore, "users");
+
+    // Create a query against the collection.
+    const q = query(usersRef, where("username", "==", inputs.username));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      showToast("Error", "Username already existed", "error");
+      setIsLoading(false)
+      return;
+    }
+
+    try {
+      const newUser = await createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
       console.log(newUser);
       if (!newUser) {
         showToast("Error", "Something went wrong", "error");
         return
       }
-      if(newUser) {
+      if (newUser) {
         const userDoc = {
           uid: newUser.user.uid,
           email: inputs.email,
@@ -56,7 +70,7 @@ const useSignUpWithEmail = () => {
       setIsLoading(false)
     }
   }
-  return {isLoading, signup, error}
+  return { isLoading, signup, error }
 }
 
 export default useSignUpWithEmail
