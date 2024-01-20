@@ -9,9 +9,8 @@ import { Link as RouterLink } from 'react-router-dom'
 const ProfilePage = () => {
   const { username } = useParams()
   const { isLoading, userProfile } = useGetUserProfileByUsername(username)
-
   if (!isLoading && !userProfile) {
-    <UserNotFound />
+    return (<UserNotFound />)
   }
   return (
     <Container maxW={"container.lg"} py={5}>
@@ -58,7 +57,7 @@ const ProfileHeaderSkeleton = () => {
 
 const UserNotFound = () => {
   return (
-    <Flex flexDir="column" textAlign={"center"} mx={"auto"}>
+    <Flex flexDir="column" textAlign={"center"} mx={"auto"} alignItems={"center"}>
       <Text fontSize={"2x1"}>User Not Found</Text>
       <Link as={RouterLink} to={"/"} color={"blue.500"} w={"max-content"} mx={"auto"}>
         Go Home
