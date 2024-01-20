@@ -3,7 +3,7 @@ import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { auth, firestore } from "../../firebase/firebase";
 import useShowToast from "../../hooks/useShowToast";
 import useAuthStore from "../../store/authStore";
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 
 const GoogleAuth = ({ prefix }) => {
 
@@ -21,7 +21,15 @@ const GoogleAuth = ({ prefix }) => {
         return;
       }
 
-      if (newUser) {
+      const userRef = doc(firestore, "users", newUser.user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userDoc = userSnap.data();
+        localStorage.setItem("user-info", JSON.stringify(userDoc));
+        loginUser(userDoc);
+      }
+      else {
         const userDoc = {
           uid: newUser.user.uid,
           email: newUser.user.email,
