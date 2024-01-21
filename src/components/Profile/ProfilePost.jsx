@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Flex,
   GridItem,
@@ -10,8 +9,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Text,
   VStack,
@@ -20,7 +17,6 @@ import {
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import React from "react";
 import Comment from "../Comment/Comment";
 import PostFooter from "../FeedPosts/PostFooter";
 
