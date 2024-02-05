@@ -10,10 +10,9 @@ const SignUp = () => {
     fullName: "",
     username: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
-
   const { isLoading, signup, error } = useSignUpWithEmail();
+
   return (<>
     <Input
       placeholder="Email"

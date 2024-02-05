@@ -7,7 +7,7 @@ const ProfileHeader = () => {
   const userProfile = useUserProfileStore(state => state.userProfile)
   const visitingOwnProfileAndAuth = authUser && authUser.username === userProfile.username;
   const visitingOtherProfileAndAuth = authUser && authUser.username !== userProfile.username;
-  console.log(userProfile)
+
   return (
     <Flex gap={{ base: 4, sm: 10 }} py={10} direction={{ base: "column", sm: "row" }}>
       <AvatarGroup size={{ base: "xl", md: "2xl" }} justifySelf={"center"} alignSelf={"flex-start"} mx={"auto"}>
@@ -47,6 +47,7 @@ const ProfileHeader = () => {
             </Flex>
           </Flex>
         )}
+
         <Flex alignItems={"center"} gap={{ base: 2, sm: 4 }}>
           <Text fontSize={{ base: "xs", md: "sm" }}>
             <Text as="span" fontWeight={"bold"} mr={1}>
